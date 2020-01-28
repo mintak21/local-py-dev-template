@@ -10,7 +10,7 @@ git clone git@github.com:mintak21/flask-django-dev-template.git
 ## 2. ディレクトリを指定して、プロジェクトを作成
 
 ```bash:Terminal
-sh scripts/setup.sh ${TARGET_DIR}
+sh scripts/setup.sh ${TARGET_DIR} ${TARGET_PJ}
 ```
 
 ### Arguments
@@ -18,6 +18,7 @@ sh scripts/setup.sh ${TARGET_DIR}
 |Arg|Outline|Example|
 |:----|:------|:--------|
 |TARGET_DIR|展開先ディレクトリ(存在しない場合は作成)|myflask_dir
+|TARGET_PJ|展開するテンプレート種別<br>指定可能な値は`flask`, `django`, `jupyter`の3つ|flask
 
 ## 3. 展開先ディレクトリにて、コンテナ起動
 
@@ -28,9 +29,7 @@ make run
 
 ## 4. サーバアクセスを確認
 
-- Flask -> http://localhost:5000/
-- Django -> 
-- Jupyter-NoteBook -> 
+http://localhost:8000/
 
 ## 5. コンテナ停止(Shutdown)
 
@@ -68,7 +67,7 @@ code
 |:-------|:--------
 |Flask|app
 |Django|自身で指定したもの
-|Jupyter|app
+|Jupyter|workdir
 
 # Caution
 
