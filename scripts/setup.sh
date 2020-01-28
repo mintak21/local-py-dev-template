@@ -46,22 +46,37 @@ function install_requirements() {
     install_docker_for_mac
 }
 
-# main
-if [ $# -ne 1 ]; then
-    printf '\033[91m%s\033[m\n' 'need Arguments:[1]TargetDir'
+function validate() {
+    if [ $# -ne 2 ]; then
+    printf '\033[91m%s\033[m\n' 'need Arguments: [1]TargetDir [2]DeployProjectType'
     exit 1
-fi
+    fi
 
+    if [ ! -e ${TARGET_DIR} ]; then
+        mkdir -p ${TARGET_DIR}
+    fi
+
+    if [ $2 == 'flask' ]; then
+        TARGET_PJ='flask_template'
+    elif [ $2 == 'jupyter' ]; then
+        TARGET_PJ='jupyter_template'
+    elif [ $2 == 'django' ]; then
+        TARGET_PJ='django_template'
+    else
+        printf '\033[91m%s\033[m\n' "Unknown Project Type: $2"
+        exit 1
+    fi
+}
+
+# main
 TARGET_DIR=$1
 
-if [ ! -e ${TARGET_DIR} ]; then
-    mkdir -p ${TARGET_DIR}
-fi
-
+validate $@
 install_requirements
 
-# とりあえずFlaskだけ対応するバージョン
 cd `dirname $0`
-cp -rf ../flask_template/. ${TARGET_DIR}
-
-printf "\033[36m%s\033[m\n" "complete create new project to ${TARGET_DIR}"
+cp -rf ../${TARGET_PJ}/. ${TARGET_DIR}
+if [ $? -ne 0 ]; then
+    printf '\033[91m%s\033[m\n' 'failed to create project'
+fi
+printf "\033[36m%s\033[m\n" "complete create new ${TARGET_PJ} project to ${TARGET_DIR}"
