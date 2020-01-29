@@ -69,12 +69,13 @@ function validate() {
 }
 
 # main
+cd `dirname $0`/..
 TARGET_DIR=$1
 
 validate $@
 install_requirements
 
-cp -rf ${PWD}/../templates/${TARGET_PJ}/. ${TARGET_DIR}
+cp -rf ./templates/${TARGET_PJ}/. ${TARGET_DIR}
 if [ $? -ne 0 ]; then
     printf '\033[91m%s\033[m\n' 'failed to create project'
 fi
