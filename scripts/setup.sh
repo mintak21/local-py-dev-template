@@ -47,8 +47,9 @@ function install_requirements() {
 }
 
 function validate() {
-    if [ $# -ne 2 ]; then
-    printf '\033[91m%s\033[m\n' 'need Arguments: [1]TargetDir [2]DeployProjectType'
+    if [ $# -lt 2 ]; then
+    printf '\033[91m%s\033[m\n' 'need Arguments: [1]TargetDir [2]DeployProjectType(jupyter or flask or django)'
+    printf '\033[91m%s\033[m\n' 'if your DeploymentProjectType is django, you can specify project_name/[3]Project_name'
     exit 1
     fi
 
@@ -62,9 +63,28 @@ function validate() {
         TARGET_PJ='jupyter'
     elif [ $2 == 'django' ]; then
         TARGET_PJ='django'
+        if [ -z "$3" ]; then
+            DJANGO_PJ_NAME="$3"
+        else
+            DJANGO_PJ_NAME='mysite'
+            printf '\033[92m%s\033[m\n' 'Use Default Django Project Name: mysite'
+        fi
     else
         printf '\033[91m%s\033[m\n' "Unknown Project Type: $2"
         exit 1
+    fi
+}
+
+function install_local_package() {
+    # Flask/Djangoはどうせimportを怒られるので、ローカルにも入れとくものは入れとく
+    # cp後の前提
+    if [ ${TARGET_PJ} == 'flask' ]; then
+        pip install -r ./templates/${TARGET_PJ}/requirements.txt
+    elif [ ${TARGET_PJ} == 'django' ]; then
+        pushd ${TARGET_DIR}
+        pip install -r ./templates/${TARGET_PJ}/requirements.txt
+        django-admin startproject ${DJANGO_PJ_NAME} .
+        popd
     fi
 }
 
@@ -79,4 +99,7 @@ cp -rf ./templates/${TARGET_PJ}/. ${TARGET_DIR}
 if [ $? -ne 0 ]; then
     printf '\033[91m%s\033[m\n' 'failed to create project'
 fi
+
+install_local_package
+
 printf "\033[36m%s\033[m\n" "complete create new ${TARGET_PJ} project to ${TARGET_DIR}"
