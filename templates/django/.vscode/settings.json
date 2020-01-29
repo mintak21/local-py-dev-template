@@ -1,0 +1,37 @@
+{
+    "files.insertFinalNewline": true,   // ファイルの最後に自動的に改行を入れる
+    "files.autoSave": "afterDelay",     // 自動保存
+    "editor.minimap.enabled": false,    // ミニマップを表示しない
+    "editor.wordWrap": "on",            // テキストの折り返し設定
+    "python.linting.pylintEnabled": false,      // pylintによる静的解析OFF
+    "python.linting.pycodestyleEnabled": false, // pycodestyleによる静的解析OFF
+    "python.linting.flake8Enabled": true,       // flake8による静的解析ON
+    "python.linting.flake8Args": [
+        "--ignore=W504",
+        "--max-line-length=150",
+        "--max-complexity=20"
+    ],
+    "python.linting.lintOnSave": true,          // 保存時に静的解析を実施
+    "python.formatting.provider": "autopep8",   // autopep8でフォーマット
+    "python.formatting.autopep8Args": [
+        "--aggressive", "--aggressive",         // autopep8の引数
+    ],
+    "python.sortImports.args":[
+        "-rc",
+     ],
+    "[python]": {
+        "editor.formatOnSave": true,              // 保存時に自動整形を行う
+        "editor.formatOnPaste": false,            // ペースト時に自動整形を行わない
+        "editor.formatOnType": false,             // 入力後に自動整形を行わない
+        "editor.codeActionsOnSave": {             // isortを自動実行
+            "source.organizeImports":true
+        },
+    },
+    "python.linting.mypyEnabled": true,           // 型静的解析ON
+    "autoDocstring.docstringFormat": "google",    // docstingのテンプレートスタイル
+    "python.testing.unittestEnabled": false,      // unittestを無効化
+    "python.testing.pyTestEnabled": true,         // pytestを有効化
+    "python.testing.pyTestArgs": [
+        "tests"
+    ]
+}
