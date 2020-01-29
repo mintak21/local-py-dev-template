@@ -4,12 +4,13 @@
 ## 1. テンプレートをダウンロード
 
 ```bash:Terminal
-git clone git@github.com:mintak21/flask-django-dev-template.git
+git clone git@github.com:mintak21/local-py-dev-template.git
 ```
 
 ## 2. ディレクトリを指定して、プロジェクトを作成
 
 ```bash:Terminal
+cd local-py-dev-template
 sh scripts/setup.sh ${TARGET_DIR} ${TARGET_PJ} ${DJANGO_PJ_NAME}
 ```
 
@@ -67,7 +68,7 @@ code
 |プロジェクト|アプリケーションディレクトリ名|
 |:-------|:--------
 |Flask|app
-|Django|自身で指定したもの
+|Django|django_project
 |Jupyter|workdir
 
 # Caution
