@@ -1,0 +1,17 @@
+version: "3.7"
+services:
+    django:
+        container_name: django-server
+        build:
+            context: ../
+            dockerfile: .local_deploy/Dockerfile
+        ports:
+            - "8000:8000"
+        volumes:
+            - type: bind
+              source: ../django_project
+              target: /usr/local/application/
+              read_only: true
+        working_dir: /usr/local/application
+        command: python manage.py runserver 0.0.0.0:8000
+        restart: "no"

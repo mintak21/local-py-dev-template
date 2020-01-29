@@ -48,26 +48,26 @@ function install_requirements() {
 
 function validate() {
     if [ $# -lt 2 ]; then
-    printf '\033[91m%s\033[m\n' 'need Arguments: [1]TargetDir [2]DeployProjectType(jupyter or flask or django)'
-    printf '\033[91m%s\033[m\n' 'if your DeploymentProjectType is django, you can specify project_name/[3]Project_name'
-    exit 1
+        printf '\033[91m%s\033[m\n' 'need Arguments: [1]TargetDir [2]DeployProjectType(f[flask] or d[django] or j[jupyter])'
+        printf '\033[91m%s\033[m\n' 'if your DeploymentProjectType is django, you can specify project_name/[3]Project_name'
+        exit 1
     fi
 
     if [ ! -e ${TARGET_DIR} ]; then
         mkdir -p ${TARGET_DIR}
     fi
 
-    if [ $2 == 'flask' ]; then
+    if [ $2 == 'f' ]; then
         TARGET_PJ='flask'
-    elif [ $2 == 'jupyter' ]; then
+    elif [ $2 == 'j' ]; then
         TARGET_PJ='jupyter'
-    elif [ $2 == 'django' ]; then
+    elif [ $2 == 'd' ]; then
         TARGET_PJ='django'
         if [ -z "$3" ]; then
-            DJANGO_PJ_NAME="$3"
-        else
-            DJANGO_PJ_NAME='mysite'
+            DJANGO_PJ_NAME="mysite"
             printf '\033[92m%s\033[m\n' 'Use Default Django Project Name: mysite'
+        else
+            DJANGO_PJ_NAME="$3"
         fi
     else
         printf '\033[91m%s\033[m\n' "Unknown Project Type: $2"
@@ -81,9 +81,13 @@ function install_local_package() {
     if [ ${TARGET_PJ} == 'flask' ]; then
         pip install -r ./templates/${TARGET_PJ}/requirements.txt
     elif [ ${TARGET_PJ} == 'django' ]; then
-        pushd ${TARGET_DIR}
         pip install -r ./templates/${TARGET_PJ}/requirements.txt
+        pushd ${TARGET_DIR}/django_project
         django-admin startproject ${DJANGO_PJ_NAME} .
+        if [ $? -ne 0 ]; then
+            printf '\033[91m%s\033[m\n' 'failed to create django-project'
+            exit 1
+        fi
         popd
     fi
 }
