@@ -1,0 +1,17 @@
+version: "3.7"
+services:
+    flask:
+        container_name: flask-server-container
+        hostname: flask-server
+        build:
+            context: ../
+            dockerfile: ./.local_deploy/Dockerfile
+        working_dir: /usr/local/application
+        ports:
+            - "8000:5000"
+        volumes:
+            - type: bind
+              source: ../app/
+              target: /usr/local/application
+        command: ["gunicorn", "flask_app:app", "-c", "config/gunicorn_setting.py"]
+        restart: "no"

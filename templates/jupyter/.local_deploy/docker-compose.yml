@@ -1,0 +1,17 @@
+version: "3.7"
+services:
+    jupyter:
+        container_name: jupyter-server-container
+        hostname: jupyter-server
+        build:
+            context: ../
+            dockerfile: ./.local_deploy/Dockerfile
+        working_dir: /usr/local/application
+        ports:
+            - "8000:8888"
+        volumes:
+            - type: bind
+              source: ../workdir
+              target: /usr/local/application
+        command: ["--port","8888","--ip=0.0.0.0","--no-browser", "--NotebookApp.password=''", "--NotebookApp.token=''", "--NotebookApp.password_required=False", "--allow-root"]
+        restart: "no"
