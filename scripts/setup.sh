@@ -84,6 +84,7 @@ function install_local_package() {
         pip install -r ./templates/${TARGET_PJ}/requirements.txt
         pushd ${TARGET_DIR}/django_project
         django-admin startproject ${DJANGO_PJ_NAME} .
+	python manage.py migrate
         if [ $? -ne 0 ]; then
             printf '\033[91m%s\033[m\n' 'failed to create django-project'
             exit 1
