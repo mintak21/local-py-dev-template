@@ -57,11 +57,11 @@ function validate() {
     fi
 
     if [ $2 == 'flask' ]; then
-        TARGET_PJ='flask_template'
+        TARGET_PJ='flask'
     elif [ $2 == 'jupyter' ]; then
-        TARGET_PJ='jupyter_template'
+        TARGET_PJ='jupyter'
     elif [ $2 == 'django' ]; then
-        TARGET_PJ='django_template'
+        TARGET_PJ='django'
     else
         printf '\033[91m%s\033[m\n' "Unknown Project Type: $2"
         exit 1
@@ -75,7 +75,7 @@ validate $@
 install_requirements
 
 cd `dirname $0`
-cp -rf ../${TARGET_PJ}/. ${TARGET_DIR}
+cp -rf ../templates/${TARGET_PJ}/. ${TARGET_DIR}
 if [ $? -ne 0 ]; then
     printf '\033[91m%s\033[m\n' 'failed to create project'
 fi
