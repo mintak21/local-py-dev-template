@@ -7,20 +7,24 @@
 git clone git@github.com:mintak21/local-py-dev-template.git
 ```
 
-## 2. ディレクトリを指定して、プロジェクトを作成
+## 2. プロジェクトを展開
 
 ```bash:Terminal
 cd local-py-dev-template
-sh scripts/setup.sh ${TARGET_DIR} ${TARGET_PJ} ${DJANGO_PJ_NAME}
+# jupyterプロジェクトを作成する場合
+make create_jupyter_pj
+# flaskプロジェクトを作成する場合
+make create_flask_pj
+# djangoプロジェクトを作成する場合
+make create_django_pj
 ```
 
-### Arguments
+### Available Arguments
 
-|Arg|Outline|Example|
-|:----|:------|:--------|
-|TARGET_DIR|展開先ディレクトリ(存在しない場合は作成)|myflask_dir
-|TARGET_PJ|展開するテンプレート種別<br>指定可能な値は`f` -> flask, `d` -> django, `j` -> jupyter の3つ|f
-|DJANGO_PJ_NAME|任意。TARGET_PJがd(django)の場合に、プロジェクト名として指定可能。省略した場合は`mysite`として扱う|my_pj
+|Arg|Outline|Default|Example|
+|:----|:------|:------|:--------|
+|TARGET_DIR|展開先ディレクトリ(存在しない場合は作成)|~/workspace/project|myflask_dir
+|DJANGO_PJ_NAME|djangoの場合に指定可能。Djangoテンプレートのプロジェクト名|mysite|my_pj
 
 ## 3. 展開先ディレクトリにて、コンテナ起動
 
@@ -57,15 +61,15 @@ Pythonによるコーディングが行いやすいような設定まで全自�
 Visual-Studio-Codeによる開発を行う方には推奨。
 
 ```bash:Terminal
-sh scripts/setup_vscode.sh
+make setup_vscode
 code
 ```
 
 # Start Development
 どのプロジェクトについても、最初の一歩となるファイルは作成されています。まずはこのファイルに追記、記述変更から始めて見ると良いでしょう。
-その後、ファイルやディレクトリを追加したくなると思いますが、その場合は**各アプリケーションディレクトリ内に作成**するようにしてください。
+その後、ファイルやディレクトリを追加したくなると思いますが、その場合は**各アプリケーションディレクトリ内に作成**するようにしてください。(下表参照)
 
-|プロジェクト|アプリケーションディレクトリ名|
+|Project|App Dir Name|
 |:-------|:--------
 |Flask|app
 |Django|django_project
