@@ -14,13 +14,22 @@ function install_brew() {
 }
 
 function install_python() {
-    which python
+    # デフォルトで2系を指すことがあるので、pyenvできちんと3系を指す
+    PY_VERSION=3.8
+    which pyenv
     if [ $? -ne 0 ]; then
-        brew install python
+        brew install pyenv
         if [ $? -ne 0 ]; then
             printf '\033[91m%s\033[m\n' 'something error with installing python'
             exit 1
         fi
+        pyenv install ${PY_VERSION}
+        if [ $? -ne 0 ]; then
+            printf '\033[91m%s\033[m\n' 'something error with installing python'
+            exit 1
+        fi
+        pyenv global ${PY_VERSION}
+        pyenv rehash
         printf '\033[36m%s\033[m\n' 'success python installation'
     fi
 }
