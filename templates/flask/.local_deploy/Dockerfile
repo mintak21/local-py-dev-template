@@ -1,5 +1,7 @@
 FROM python:3.8-slim-buster
 
+ENV PYTHONUNBUFFERED 1
+ENV PYTHONDONTWRITEBYTECODE 1
 RUN mkdir -p /usr/local/application
 COPY ./app/ /usr/local/application/
 COPY ./requirements.txt /usr/local/application/requirements.txt
