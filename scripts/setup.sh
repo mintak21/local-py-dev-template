@@ -48,7 +48,7 @@ function install_requirements() {
 
 function validate() {
     if [ $# -lt 2 ]; then
-        printf '\033[91m%s\033[m\n' 'need Arguments: [1]TargetDir [2]DeployProjectType(f[flask] or d[django] or j[jupyter])'
+        printf '\033[91m%s\033[m\n' 'need Arguments: [1]TargetDir [2]DeployProjectType(flask or django or jupyter)'
         printf '\033[91m%s\033[m\n' 'if your DeploymentProjectType is django, you can specify project_name/[3]Project_name'
         exit 1
     fi
@@ -57,11 +57,11 @@ function validate() {
         mkdir -p ${TARGET_DIR}
     fi
 
-    if [ $2 == 'f' ]; then
+    if [ $2 == 'flask' ]; then
         TARGET_PJ='flask'
-    elif [ $2 == 'j' ]; then
+    elif [ $2 == 'jupyter' ]; then
         TARGET_PJ='jupyter'
-    elif [ $2 == 'd' ]; then
+    elif [ $2 == 'django' ]; then
         TARGET_PJ='django'
         if [ -z "$3" ]; then
             DJANGO_PJ_NAME="mysite"
@@ -83,8 +83,9 @@ function install_local_package() {
     elif [ ${TARGET_PJ} == 'django' ]; then
         pip install -r ./templates/${TARGET_PJ}/requirements.txt
         pushd ${TARGET_DIR}/django_project
+        # 本来はコンテナで実行すべき
         django-admin startproject ${DJANGO_PJ_NAME} .
-	python manage.py migrate
+	    python manage.py migrate
         if [ $? -ne 0 ]; then
             printf '\033[91m%s\033[m\n' 'failed to create django-project'
             exit 1
