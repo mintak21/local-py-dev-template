@@ -6,6 +6,7 @@ function install_extensions() {
 	code --install-extension ms-azuretools.vscode-docker      # vscodeでdockerを扱う
 	code --install-extension vscode-icons-team.vscode-icons   # アイコンを見やすく
 	code --install-extension ms-python.python                 # Pythonを扱う
+	code --install-extension njpwerner.autodocstring          # DocString
 	printf '\033[36m%s\033[m\n' 'success extensions installation'
 }
 
