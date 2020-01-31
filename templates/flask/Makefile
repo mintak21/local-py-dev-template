@@ -1,6 +1,6 @@
 DEPLOY_DIR = .local_deploy
 
-.PHONY: run restart stop cleanup
+.PHONY: run stop cleanup
 
 run:
 	docker-compose -f $(DEPLOY_DIR)/docker-compose.yml up
